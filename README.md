@@ -19,7 +19,7 @@ $ npm install -g @noreajs/cli
 $ norea COMMAND
 running command...
 $ norea (-v|--version|version)
-@noreajs/cli/0.0.0 win32-x64 node-v12.16.2
+@noreajs/cli/0.0.1 win32-x64 node-v12.16.2
 $ norea --help [COMMAND]
 USAGE
   $ norea COMMAND
@@ -79,7 +79,7 @@ EXAMPLE
   $ norea hello
 ```
 
-_See code: [src\commands\hello.ts](https://github.com/noreajs/cli/blob/v0.0.0/src\commands\hello.ts)_
+_See code: [src\commands\hello.ts](https://github.com/noreajs/cli/blob/v0.0.1/src\commands\hello.ts)_
 
 ## `norea help [COMMAND]`
 
@@ -100,7 +100,7 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.1.0
 
 ## `norea make:controller [FILE]`
 
-describe the command here
+create a new controller
 
 ```
 USAGE
@@ -112,11 +112,11 @@ OPTIONS
   -n, --name=name  name to print
 ```
 
-_See code: [src\commands\make\controller.ts](https://github.com/noreajs/cli/blob/v0.0.0/src\commands\make\controller.ts)_
+_See code: [src\commands\make\controller.ts](https://github.com/noreajs/cli/blob/v0.0.1/src\commands\make\controller.ts)_
 
 ## `norea make:model [FILE]`
 
-describe the command here
+create a new model
 
 ```
 USAGE
@@ -128,7 +128,7 @@ OPTIONS
   -n, --name=name  name to print
 ```
 
-_See code: [src\commands\make\model.ts](https://github.com/noreajs/cli/blob/v0.0.0/src\commands\make\model.ts)_
+_See code: [src\commands\make\model.ts](https://github.com/noreajs/cli/blob/v0.0.1/src\commands\make\model.ts)_
 
 ## `norea new APPNAME`
 
@@ -154,7 +154,7 @@ OPTIONS
   -t, --template=typescript|javascript  [default: typescript] project template
 ```
 
-_See code: [src\commands\new.ts](https://github.com/noreajs/cli/blob/v0.0.0/src\commands\new.ts)_
+_See code: [src\commands\new.ts](https://github.com/noreajs/cli/blob/v0.0.1/src\commands\new.ts)_
 
 ## `norea plugins`
 
