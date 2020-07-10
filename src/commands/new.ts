@@ -5,7 +5,7 @@ import fs = require("fs");
 import figlet = require("figlet");
 import stringify = require("json-stringify-pretty-compact");
 import colors = require("colors");
-import INoreaConfig from "../interfaces/INoreaConfig";
+import { INoreaConfig } from "../interfaces/INoreaConfig";
 import defaultConfig from "../defaultConfig";
 
 export default class New extends Command {

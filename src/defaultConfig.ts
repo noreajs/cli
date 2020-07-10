@@ -1,4 +1,4 @@
-import INoreaConfig from "./interfaces/INoreaConfig";
+import { INoreaConfig } from "./interfaces/INoreaConfig";
 
 const defaultConfig: INoreaConfig = {
   template: "typescript",

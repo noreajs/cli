@@ -1,13 +1,24 @@
-export default interface INoreaConfig {
-  template: "typescript" | "javascript";
-  dbStrategy: "mongoose" | "sequelize";
+export declare type ConfigTemplateType = "typescript" | "javascript";
+export declare type ConfigDBStrategyType = "mongoose" | "sequelize";
+export declare type ConfigFoldersType = {
+  controllers: string;
+  routes: string;
+  middlewares: string;
+  providers: string;
+  models: string;
+  interfaces: string;
+};
+
+export interface INoreaConfig {
+  template: ConfigTemplateType;
+  dbStrategy: ConfigDBStrategyType;
   rootDir: string;
-  folders: {
-    controllers: string;
-    routes: string;
-    middlewares: string;
-    providers: string;
-    models: string;
-    interfaces: string;
-  };
+  folders: ConfigFoldersType;
+}
+
+export interface INoreaConfigUpdate {
+  template?: ConfigTemplateType;
+  dbStrategy?: ConfigDBStrategyType;
+  rootDir?: string;
+  folders?: Partial<ConfigFoldersType>;
 }

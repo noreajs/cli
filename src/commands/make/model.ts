@@ -1,4 +1,5 @@
 import { Command, flags } from "@oclif/command";
+import NoreaConfigHelper from "../../helpers/NoreaConfigHelper";
 
 export default class MakeModel extends Command {
   static description = "create a new model";
@@ -16,12 +17,14 @@ export default class MakeModel extends Command {
   async run() {
     const { args, flags } = this.parse(MakeModel);
 
-    const name = flags.name ?? "world";
-    this.log(
-      `hello ${name} from F:\\codes-sources-projets\\node-js\\noreajs-cli\\src\\commands\\make\\model.ts`
-    );
-    if (args.file && flags.force) {
-      this.log(`you input --force and --file: ${args.file}`);
+    const configHelper = new NoreaConfigHelper();
+
+    if (!configHelper.initialized) {
+      this.log("There is not norea.js project in this folder.");
+    } else {
+      this.log("config file", configHelper.config);
+      configHelper.update({ template: "typescript" });
+      await configHelper.save();
     }
   }
 }

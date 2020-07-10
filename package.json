@@ -54,7 +54,7 @@
   ],
   "homepage": "https://github.com/noreajs/cli",
   "keywords": [
-    "oclif"
+    "oclif", "norea.js", "api", "norea-cli", "norea", "rest-api"
   ],
   "license": "MIT",
   "main": "lib/index.js",
