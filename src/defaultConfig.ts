@@ -1,8 +1,8 @@
-import INoreaConfig from './interfaces/INoreaConfig';
+import INoreaConfig from "./interfaces/INoreaConfig";
 
 const defaultConfig: INoreaConfig = {
   template: "typescript",
-  dbManager: "mongoose",
+  dbStrategy: "mongoose",
   rootDir: "src",
   folders: {
     controllers: "controllers",
