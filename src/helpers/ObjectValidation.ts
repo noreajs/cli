@@ -27,15 +27,17 @@ export const validateObject = <T>(
 
       const elmtRules = rules[key];
 
-      for (const rule of elmtRules) {
-        if (!rule.validator(element, obj)) {
-          errors.push(rule.errorMessage);
-          if (messages[key]) {
-            messages[key].errors.push(rule.errorMessage);
-          } else {
-            messages[key] = {
-              errors: [rule.errorMessage],
-            };
+      if (elmtRules) {
+        for (const rule of elmtRules) {
+          if (!rule.validator(element, obj)) {
+            errors.push(rule.errorMessage);
+            if (messages[key]) {
+              messages[key].errors.push(rule.errorMessage);
+            } else {
+              messages[key] = {
+                errors: [rule.errorMessage],
+              };
+            }
           }
         }
       }

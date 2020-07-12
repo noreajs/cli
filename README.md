@@ -32,7 +32,8 @@ USAGE
 * [`norea hello`](#norea-hello)
 * [`norea help [COMMAND]`](#norea-help-command)
 * [`norea make:controller [FILE]`](#norea-makecontroller-file)
-* [`norea make:model [FILE]`](#norea-makemodel-file)
+* [`norea make:interface [FILE]`](#norea-makeinterface-file)
+* [`norea make:model MODELNAME`](#norea-makemodel-modelname)
 * [`norea new APPNAME`](#norea-new-appname)
 * [`norea plugins`](#norea-plugins)
 * [`norea plugins:install PLUGIN...`](#norea-pluginsinstall-plugin)
@@ -114,18 +115,37 @@ OPTIONS
 
 _See code: [src\commands\make\controller.ts](https://github.com/noreajs/cli/blob/v0.0.1/src\commands\make\controller.ts)_
 
-## `norea make:model [FILE]`
+## `norea make:interface [FILE]`
 
-create a new model
+describe the command here
 
 ```
 USAGE
-  $ norea make:model [FILE]
+  $ norea make:interface [FILE]
 
 OPTIONS
   -f, --force
   -h, --help       show CLI help
   -n, --name=name  name to print
+```
+
+_See code: [src\commands\make\interface.ts](https://github.com/noreajs/cli/blob/v0.0.1/src\commands\make\interface.ts)_
+
+## `norea make:model MODELNAME`
+
+create a new model
+
+```
+USAGE
+  $ norea make:model MODELNAME
+
+ARGUMENTS
+  MODELNAME  model name
+
+OPTIONS
+  -f, --force
+  -h, --help      show CLI help
+  -s, --separate  separate the model's interface
 ```
 
 _See code: [src\commands\make\model.ts](https://github.com/noreajs/cli/blob/v0.0.1/src\commands\make\model.ts)_

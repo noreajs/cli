@@ -5,8 +5,7 @@ import fs = require("fs");
 import figlet = require("figlet");
 import stringify = require("json-stringify-pretty-compact");
 import colors = require("colors");
-import { INoreaConfig } from "../interfaces/INoreaConfig";
-import defaultConfig from "../defaultConfig";
+import NoreaConfigHelper from "../helpers/NoreaConfigHelper";
 
 export default class New extends Command {
   static description = "create a new norea.js application (API)";
@@ -57,6 +56,8 @@ export default class New extends Command {
   async run() {
     const { args, flags } = this.parse(New);
 
+    const noreaConfig = new NoreaConfigHelper();
+
     this.log(
       colors.green(
         figlet.textSync("Norea.js", {
@@ -101,7 +102,6 @@ export default class New extends Command {
                       `https://github.com/noreajs/api-starter-${flags.template}.git`,
                       args.appName,
                     ]).then((result) => {
-                      // console.log(result);
                       if (result.exitCode !== 0) {
                         throw new Error(
                           result.stderr ?? "Unable to clone the project"
@@ -126,35 +126,30 @@ export default class New extends Command {
               );
             }),
         },
-        // {
-        //   title: "Install package dependencies with npm",
-        //   enabled: (ctx) => flags.package === "npm" || ctx.yarn === false,
-        //   task: () => execa("npm", ["install"], { cwd: args.appName }),
-        // },
+        {
+          title: "Install package dependencies with npm",
+          enabled: (ctx) => flags.package === "npm" || ctx.yarn === false,
+          task: () => execa("npm", ["install"], { cwd: args.appName }),
+        },
         {
           title: "Creating config file",
           task: () =>
-            new Promise((resolve, reject) => {
-              // default config
-              const config: INoreaConfig = defaultConfig;
-
+            new Promise(async (resolve, reject) => {
               // update config
-              config.template = flags.template as any;
-              config.dbStrategy = flags.dbStrategy as any;
+              noreaConfig.update({
+                template: flags.template as any,
+                dbStrategy: flags.dbStrategy as any,
+              });
 
-              fs.writeFile(
-                `${args.appName}/noreaconfig.json`,
-                stringify(config, {
-                  indent: "\t",
-                }),
-                (err) => {
-                  if (err) {
-                    reject(err);
-                  } else {
-                    resolve("config file added successfully");
-                  }
-                }
-              );
+              // save config
+              await noreaConfig
+                .save(args.appName)
+                .then(() => {
+                  resolve("config file added successfully");
+                })
+                .catch((err) => {
+                  reject(err);
+                });
             }),
         },
       ],

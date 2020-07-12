@@ -3,6 +3,7 @@ import fs = require("fs");
 import { INoreaConfig, INoreaConfigUpdate } from "../interfaces/INoreaConfig";
 import stringify = require("json-stringify-pretty-compact");
 import { validateObject } from "./ObjectValidation";
+import { Obj } from "@noreajs/common";
 
 export default class NoreaConfigHelper {
   static CONFIG_FILE_NAME = "noreaconfig.json";
@@ -24,6 +25,9 @@ export default class NoreaConfigHelper {
       this.config = JSON.parse(
         fs.readFileSync(NoreaConfigHelper.CONFIG_FILE_NAME).toString()
       );
+
+      // validate the config
+      this.validateConfig(this.config);
     } else {
       // setting default config
       this.config = {
@@ -42,8 +46,12 @@ export default class NoreaConfigHelper {
     }
   }
 
-  update(params: INoreaConfigUpdate) {
-    const paramsValidation = validateObject<INoreaConfigUpdate>(params, {
+  /**
+   * Validate config
+   * @param config norea config
+   */
+  validateConfig(config: INoreaConfig | INoreaConfigUpdate) {
+    const r = validateObject<INoreaConfigUpdate>(config, {
       template: [
         {
           errorMessage: `template value must be within [${NoreaConfigHelper.TEMPLATE_LIST.join(
@@ -65,18 +73,29 @@ export default class NoreaConfigHelper {
         },
       ],
     });
-
-    if (paramsValidation.valid) {
-        
-    } else {
-      throw Error(paramsValidation.message);
-    }
+    if (!r.valid) throw Error(r.message);
   }
 
+  update(params: INoreaConfigUpdate) {
+    // validate the config
+    this.validateConfig(params);
+
+    // update config
+    this.config = Obj.mergeNested({
+      left: this.config,
+      right: params,
+      priority: "right",
+    });
+  }
+
+  /**
+   * Save the config file
+   * @param cwd path to the config file
+   */
   save(cwd?: string) {
     return new Promise((resolve, reject) => {
       fs.writeFile(
-        `${cwd ? cwd + "/" : ""}noreaconfig.json`,
+        `${cwd ? cwd + "/" : ""}${NoreaConfigHelper.CONFIG_FILE_NAME}`,
         stringify(this.config, {
           indent: "\t",
         }),

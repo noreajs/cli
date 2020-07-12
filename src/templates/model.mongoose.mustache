@@ -1,0 +1,15 @@
+import { mongooseModel } from "@noreajs/mongoose";
+import { Schema } from "mongoose";
+import I{{name}} from "{{{interfacesPath}}}"
+
+export default mongooseModel<I{{name}}>({
+  name: "{{name}}",
+  collection: "{{collection}}",
+  schema: new Schema(
+    {
+    },
+    {
+      timestamps: true,
+    }
+  ),
+});

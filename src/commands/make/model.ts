@@ -1,18 +1,29 @@
 import { Command, flags } from "@oclif/command";
+import path = require("path");
+import fs = require("fs");
 import NoreaConfigHelper from "../../helpers/NoreaConfigHelper";
+import { ModelCommandHelper } from "../../helpers/ModelCommandHelper";
 
 export default class MakeModel extends Command {
   static description = "create a new model";
 
   static flags = {
     help: flags.help({ char: "h" }),
-    // flag with a value (-n, --name=VALUE)
-    name: flags.string({ char: "n", description: "name to print" }),
-    // flag with no value (-f, --force)
-    force: flags.boolean({ char: "f" }),
+    // separate interface
+    separate: flags.boolean({
+      char: "s",
+      description: "separate the model's interface",
+      default: false,
+    })
   };
 
-  static args = [{ name: "file" }];
+  static args = [
+    {
+      name: "modelName",
+      required: true,
+      description: "model name",
+    },
+  ];
 
   async run() {
     const { args, flags } = this.parse(MakeModel);
@@ -22,9 +33,25 @@ export default class MakeModel extends Command {
     if (!configHelper.initialized) {
       this.log("There is not norea.js project in this folder.");
     } else {
-      this.log("config file", configHelper.config);
-      configHelper.update({ template: "typescript" });
-      await configHelper.save();
+      await ModelCommandHelper.createModal(this, {
+        modelName: args.modelName,
+        config: configHelper.config,
+        template: fs
+          .readFileSync(
+            path.resolve(
+              __dirname,
+              `../../templates/model${flags.separate ? "" : "-interface"}.${
+                configHelper.config.dbStrategy
+              }.mustache`
+            )
+          )
+          .toString(),
+        interfaceTemplate: fs
+          .readFileSync(
+            path.resolve(__dirname, `../../templates/interface.mustache`)
+          )
+          .toString(),
+      });
     }
   }
 }
