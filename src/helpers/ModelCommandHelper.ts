@@ -137,7 +137,7 @@ export class ModelCommandHelper {
           .then(() => {
             cmd.log(
               green(
-                `\n The model ${settings.modelName} has been successfully created!\n`
+                `\n The model \`${settings.modelName}\` has been successfully created!\n`
               )
             );
             resolve();

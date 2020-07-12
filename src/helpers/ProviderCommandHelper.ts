@@ -9,28 +9,31 @@ import { green } from "colors";
 import camelcase = require("camelcase");
 import { INoreaConfig } from "../interfaces/INoreaConfig";
 
-export class InterfaceCommandHelper {
+export class ProviderCommandHelper {
   static async createModal(
     cmd: Command,
     settings: {
-      interfaceName: string;
+      providerName: string;
       template: any;
       config: INoreaConfig;
     }
   ) {
     return new Promise<void>(async (resolve, reject) => {
-      // interface name
-      const interfaceName = camelcase(settings.interfaceName, {
+      // provider name
+      const providerName = camelcase(settings.providerName, {
         pascalCase: true,
       });
 
       // file name
-      const fileName = `${interfaceName}.${
+      const fileName = `${decamelize(
+        providerName,
+        "-"
+      ).toLowerCase()}.provider.${
         settings.config.template === "typescript" ? "ts" : "js"
       }`;
 
       // file directory
-      const directory = `${settings.config.rootDir}/${settings.config.folders.interfaces}`;
+      const directory = `${settings.config.rootDir}/${settings.config.folders.providers}`;
       const fullPath = `${directory}/${fileName}`;
 
       let fileExist = existsSync(fullPath);
@@ -57,19 +60,19 @@ export class InterfaceCommandHelper {
       if (!fileExist) {
         const tasks = new Listr([
           {
-            title: `Create interfaces directory: ${directory}`,
+            title: `Create providers directory: ${directory}`,
             enabled: () => !existsSync(directory),
             task: () => {
               mkdirSync(directory, { recursive: true });
             },
           },
           {
-            title: `Generate interface`,
+            title: `Generate provider`,
             task: () => {
               // generate boilplate
               const renderedTemplate = Mustache.render(settings.template, {
-                name: settings.interfaceName,
-                collection: pluralize(decamelize(settings.interfaceName, "-")),
+                name: settings.providerName,
+                collection: pluralize(decamelize(settings.providerName, "-")),
               });
 
               // write file
@@ -83,7 +86,7 @@ export class InterfaceCommandHelper {
           .then(() => {
             cmd.log(
               green(
-                `\n The interface \`${settings.interfaceName}\` has been successfully created!\n`
+                `\n The provider \`${settings.providerName}Provider\` has been successfully created!\n`
               )
             );
 
@@ -91,7 +94,7 @@ export class InterfaceCommandHelper {
           })
           .catch((err) => {
             cmd.log(
-              `\n Failed to create the interface ${settings.interfaceName}.\n`
+              `\n Failed to create the provider ${settings.providerName}.\n`
             );
 
             reject(err);
