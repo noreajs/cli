@@ -36,13 +36,14 @@ USAGE
 * [`norea make:middleware MIDDLEWARENAME`](#norea-makemiddleware-middlewarename)
 * [`norea make:model MODELNAME`](#norea-makemodel-modelname)
 * [`norea make:provider PROVIDERNAME`](#norea-makeprovider-providername)
-* [`norea make:route [FILE]`](#norea-makeroute-file)
+* [`norea make:route ROUTENAME`](#norea-makeroute-routename)
 * [`norea new APPNAME`](#norea-new-appname)
 * [`norea plugins`](#norea-plugins)
 * [`norea plugins:install PLUGIN...`](#norea-pluginsinstall-plugin)
 * [`norea plugins:link PLUGIN`](#norea-pluginslink-plugin)
 * [`norea plugins:uninstall PLUGIN...`](#norea-pluginsuninstall-plugin)
 * [`norea plugins:update`](#norea-pluginsupdate)
+* [`norea start [FILE]`](#norea-start-file)
 * [`norea update [CHANNEL]`](#norea-update-channel)
 
 ## `norea autocomplete [SHELL]`
@@ -196,18 +197,19 @@ OPTIONS
 
 _See code: [src\commands\make\provider.ts](https://github.com/noreajs/cli/blob/v0.0.1/src\commands\make\provider.ts)_
 
-## `norea make:route [FILE]`
+## `norea make:route ROUTENAME`
 
-describe the command here
+create a route file
 
 ```
 USAGE
-  $ norea make:route [FILE]
+  $ norea make:route ROUTENAME
+
+ARGUMENTS
+  ROUTENAME  route name
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help  show CLI help
 ```
 
 _See code: [src\commands\make\route.ts](https://github.com/noreajs/cli/blob/v0.0.1/src\commands\make\route.ts)_
@@ -354,6 +356,22 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v1.9.0/src\commands\plugins\update.ts)_
+
+## `norea start [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ norea start [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src\commands\start.ts](https://github.com/noreajs/cli/blob/v0.0.1/src\commands\start.ts)_
 
 ## `norea update [CHANNEL]`
 
