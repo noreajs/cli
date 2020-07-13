@@ -14,10 +14,11 @@ import {{provider.name}} from "{{{provider.path}}}";
 {{/if}}
 
 /**
- * controller description
+ * Controller description
  */
 class {{name}} {
-    {{#each actions as |action|}}
+    {{#if actions}}
+        {{#each actions as |action|}}
     /**
     * {{action}}
     * @param req request
@@ -31,7 +32,23 @@ class {{name}} {
             return res.status(HttpStatus.InternalServerError).json(serializeError(error));
         }
     }
-  {{/each}}
+        {{/each}}
+    {{else}}
+    /**
+    * Example method description
+    * @param req request
+    * @param res response
+    */
+    async example(req: Request, res: Response) {
+        try {
+            // logic here
+            return res.status(HttpStatus.Ok).send("{{name}} > example");
+        } catch(error) {
+            return res.status(HttpStatus.InternalServerError).json(serializeError(error));
+        }
+    }
+    {{/if}}
+
 }
 
 export default new {{name}}() as {{name}};

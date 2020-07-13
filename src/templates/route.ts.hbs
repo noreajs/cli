@@ -1,4 +1,7 @@
 import { NoreaRouter } from "@noreajs/core";
+{{#unless actions}}
+import { Response, Request } from "express";
+{{/unless}}
 {{#if middleware}}
 import {{middleware.name}} from "{{middleware.path}}";
 {{/if}}

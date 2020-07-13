@@ -30,7 +30,7 @@ export type ControllerTemplateType = {
     name: string;
     path: string;
   };
-  actions: string[];
+  actions?: string[];
 };
 
 export class ControllerCommandHelper {
@@ -82,7 +82,9 @@ export class ControllerCommandHelper {
       name: `${camelcase(settings.name, {
         pascalCase: true,
       })}Controller`,
-      actions: ControllerCommandHelper.CONTROlLER_DEFAULT_METHODS,
+      actions: settings.includeActions
+        ? ControllerCommandHelper.CONTROlLER_DEFAULT_METHODS
+        : undefined,
 
       /**
        * Interface
@@ -174,43 +176,47 @@ export class ControllerCommandHelper {
             ).replace(/(\\)+/g, "/"),
           }
         : undefined,
-      actions: [
-        {
-          description: `Get all ${pluralize(decamelize(settings.name, " "))}`,
-          httpMethod: "get",
-          method: "index",
-          route: "",
-          controller: `${camelcase(settings.name)}Controller`,
-        },
-        {
-          description: `Create ${decamelize(settings.name, " ")}`,
-          httpMethod: "post",
-          method: "create",
-          route: "",
-          controller: `${camelcase(settings.name)}Controller`,
-        },
-        {
-          description: `Show ${decamelize(settings.name, " ")}`,
-          httpMethod: "get",
-          method: "show",
-          route: "/:id",
-          controller: `${camelcase(settings.name)}Controller`,
-        },
-        {
-          description: `Edit ${decamelize(settings.name, " ")}`,
-          httpMethod: "put",
-          method: "edit",
-          route: "/:id",
-          controller: `${camelcase(settings.name)}Controller`,
-        },
-        {
-          description: `Delete ${decamelize(settings.name, " ")}`,
-          httpMethod: "delete",
-          method: "delete",
-          route: "/:id",
-          controller: `${camelcase(settings.name)}Controller`,
-        },
-      ],
+      actions: settings.includeActions
+        ? [
+            {
+              description: `Get all ${pluralize(
+                decamelize(settings.name, " ")
+              )}`,
+              httpMethod: "get",
+              method: "index",
+              route: "",
+              controller: `${camelcase(settings.name)}Controller`,
+            },
+            {
+              description: `Create ${decamelize(settings.name, " ")}`,
+              httpMethod: "post",
+              method: "create",
+              route: "",
+              controller: `${camelcase(settings.name)}Controller`,
+            },
+            {
+              description: `Show ${decamelize(settings.name, " ")}`,
+              httpMethod: "get",
+              method: "show",
+              route: "/:id",
+              controller: `${camelcase(settings.name)}Controller`,
+            },
+            {
+              description: `Edit ${decamelize(settings.name, " ")}`,
+              httpMethod: "put",
+              method: "edit",
+              route: "/:id",
+              controller: `${camelcase(settings.name)}Controller`,
+            },
+            {
+              description: `Delete ${decamelize(settings.name, " ")}`,
+              httpMethod: "delete",
+              method: "delete",
+              route: "/:id",
+              controller: `${camelcase(settings.name)}Controller`,
+            },
+          ]
+        : undefined,
     };
 
     // file name
