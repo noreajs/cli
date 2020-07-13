@@ -1,0 +1,23 @@
+{
+    "controllerName": "UserController",
+    "model": {
+        "separateInterface": false,
+        "name": "User",
+        "path": "../models/User"
+    },
+    "interface": {
+        "name": "IUser",
+        "path": "../interfaces/IUser"
+    },
+    "provider": {
+        "name": "userProvider",
+        "path": "../providers/user.provider"
+    },
+    "actions": [
+        "index",
+        "create",
+        "show",
+        "edit",
+        "delete"
+    ]
+}

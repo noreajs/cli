@@ -31,10 +31,12 @@ USAGE
 * [`norea autocomplete [SHELL]`](#norea-autocomplete-shell)
 * [`norea hello`](#norea-hello)
 * [`norea help [COMMAND]`](#norea-help-command)
-* [`norea make:controller [FILE]`](#norea-makecontroller-file)
+* [`norea make:controller NAME`](#norea-makecontroller-name)
 * [`norea make:interface INTERFACENAME`](#norea-makeinterface-interfacename)
+* [`norea make:middleware MIDDLEWARENAME`](#norea-makemiddleware-middlewarename)
 * [`norea make:model MODELNAME`](#norea-makemodel-modelname)
-* [`norea make:provider [FILE]`](#norea-makeprovider-file)
+* [`norea make:provider PROVIDERNAME`](#norea-makeprovider-providername)
+* [`norea make:route [FILE]`](#norea-makeroute-file)
 * [`norea new APPNAME`](#norea-new-appname)
 * [`norea plugins`](#norea-plugins)
 * [`norea plugins:install PLUGIN...`](#norea-pluginsinstall-plugin)
@@ -100,18 +102,27 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.1.0/src\commands\help.ts)_
 
-## `norea make:controller [FILE]`
+## `norea make:controller NAME`
 
 create a new controller
 
 ```
 USAGE
-  $ norea make:controller [FILE]
+  $ norea make:controller NAME
+
+ARGUMENTS
+  NAME  controller name
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help                       show CLI help
+  -n, --noActions                  not include controller actions (index, edit, show, delete, create)
+  -s, --separate                   separate the model's interface
+  --middleware                     include a middleware, generate if not exist.
+  --middlewareName=middlewareName  include a middleware with the given name, generate if not exist.
+  --model                          include a model, generate if not exist.
+  --modelName=modelName            include a model with the given name, generate if not exist.
+  --provider                       include a provider, generate if not exist.
+  --providerName=providerName      include a provider with the given name, generate if not exist.
 ```
 
 _See code: [src\commands\make\controller.ts](https://github.com/noreajs/cli/blob/v0.0.1/src\commands\make\controller.ts)_
@@ -133,6 +144,23 @@ OPTIONS
 
 _See code: [src\commands\make\interface.ts](https://github.com/noreajs/cli/blob/v0.0.1/src\commands\make\interface.ts)_
 
+## `norea make:middleware MIDDLEWARENAME`
+
+create a middleware
+
+```
+USAGE
+  $ norea make:middleware MIDDLEWARENAME
+
+ARGUMENTS
+  MIDDLEWARENAME  middleware name
+
+OPTIONS
+  -h, --help  show CLI help
+```
+
+_See code: [src\commands\make\middleware.ts](https://github.com/noreajs/cli/blob/v0.0.1/src\commands\make\middleware.ts)_
+
 ## `norea make:model MODELNAME`
 
 create a new model
@@ -151,13 +179,30 @@ OPTIONS
 
 _See code: [src\commands\make\model.ts](https://github.com/noreajs/cli/blob/v0.0.1/src\commands\make\model.ts)_
 
-## `norea make:provider [FILE]`
+## `norea make:provider PROVIDERNAME`
+
+create a new provider
+
+```
+USAGE
+  $ norea make:provider PROVIDERNAME
+
+ARGUMENTS
+  PROVIDERNAME  provider name
+
+OPTIONS
+  -h, --help  show CLI help
+```
+
+_See code: [src\commands\make\provider.ts](https://github.com/noreajs/cli/blob/v0.0.1/src\commands\make\provider.ts)_
+
+## `norea make:route [FILE]`
 
 describe the command here
 
 ```
 USAGE
-  $ norea make:provider [FILE]
+  $ norea make:route [FILE]
 
 OPTIONS
   -f, --force
@@ -165,7 +210,7 @@ OPTIONS
   -n, --name=name  name to print
 ```
 
-_See code: [src\commands\make\provider.ts](https://github.com/noreajs/cli/blob/v0.0.1/src\commands\make\provider.ts)_
+_See code: [src\commands\make\route.ts](https://github.com/noreajs/cli/blob/v0.0.1/src\commands\make\route.ts)_
 
 ## `norea new APPNAME`
 

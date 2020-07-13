@@ -1,0 +1,20 @@
+import { Request, Response, NextFunction } from "express";
+
+/**
+ * {{name}} middleware
+ */
+class {{name}}Middleware {
+  /**
+   * Only administrator can access to the resource
+   *
+   * @param req
+   * @param res
+   * @param next
+   */
+  yourMethod(req: Request, res: Response, next: NextFunction) {
+    // you code here
+    return next();
+  }
+}
+
+export default new {{name}}Middleware() as {{name}}Middleware

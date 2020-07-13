@@ -3,6 +3,7 @@ import path = require("path");
 import fs = require("fs");
 import NoreaConfigHelper from "../../helpers/NoreaConfigHelper";
 import { ModelCommandHelper } from "../../helpers/ModelCommandHelper";
+import { green } from "colors";
 
 export default class MakeModel extends Command {
   static description = "create a new model";
@@ -14,7 +15,7 @@ export default class MakeModel extends Command {
       char: "s",
       description: "separate the model's interface",
       default: false,
-    })
+    }),
   };
 
   static args = [
@@ -33,25 +34,37 @@ export default class MakeModel extends Command {
     if (!configHelper.initialized) {
       this.log("There is not norea.js project in this folder.");
     } else {
-      await ModelCommandHelper.createModal(this, {
+      // file extension
+      const ext = configHelper.config.template === "typescript" ? "ts" : "js";
+
+      // run
+      ModelCommandHelper.create(this, {
         modelName: args.modelName,
         config: configHelper.config,
+        separateInterface: flags.separate,
         template: fs
           .readFileSync(
             path.resolve(
               __dirname,
               `../../templates/model${flags.separate ? "" : "-interface"}.${
                 configHelper.config.dbStrategy
-              }.mustache`
+              }.${ext}.hbs`
             )
           )
           .toString(),
         interfaceTemplate: fs
           .readFileSync(
-            path.resolve(__dirname, `../../templates/interface.mustache`)
+            path.resolve(__dirname, `../../templates/interface.${ext}.hbs`)
           )
           .toString(),
-      });
+      })
+        .run()
+        .then(() => {
+          this.log(green(`\n The model has been successfully created!\n`));
+        })
+        .catch((err) => {
+          this.log(`\n Failed to create the model.\n`);
+        });
     }
   }
 }

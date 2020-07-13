@@ -10,40 +10,76 @@ import { INoreaConfig } from "../interfaces/INoreaConfig";
 const input = require("listr-input");
 const UpdaterRenderer = require("listr-update-renderer");
 
-export class ProviderCommandHelper {
+export type RouteTemplateType = {
+  group: string;
+  middleware?: {
+    name: string;
+    path: string;
+  };
+  controller?: {
+    name: string;
+    path: string;
+  };
+  actions?: Array<{
+    description: string;
+    route: string;
+    httpMethod: "get" | "post" | "put" | "delete";
+    method: string;
+    controller: string;
+  }>;
+};
+
+export class RouteCommandHelper {
+  /**
+   * Render template
+   * @param param template rendering data
+   */
+  static renderTemplate(param: {
+    template: string;
+    templateData: RouteTemplateType;
+  }) {
+    return Handlebars.compile(param.template)(param.templateData);
+  }
+
+  /**
+   * Generate route
+   * @param cmd command
+   * @param settings settings
+   */
   static create(
     cmd: Command,
     settings: {
-      providerName: string;
+      routeName: string;
       template: string;
+      templateData: RouteTemplateType;
       config: INoreaConfig;
     }
   ) {
-    // provider name
-    const providerName = camelcase(settings.providerName, {
+    // route name
+    const routeName = camelcase(settings.routeName, {
       pascalCase: true,
     });
 
     // file name
-    const fileName = `${decamelize(providerName, "-").toLowerCase()}.provider.${
+    const fileName = `${decamelize(routeName, "-").toLowerCase()}.route.${
       settings.config.template === "typescript" ? "ts" : "js"
     }`;
 
     // file directory
-    const directory = `${settings.config.rootDir}/${settings.config.folders.providers}`;
+    const directory = `${settings.config.rootDir}/${settings.config.folders.routes}`;
     const fullPath = `${directory}/${fileName}`;
 
     return new Listr(
       [
         {
-          title: `Create providers directory: ${directory}`,
+          title: `Create routes directory: ${directory}`,
           enabled: () => !existsSync(directory),
           task: () => {
             mkdirSync(directory, { recursive: true });
           },
         },
         {
-          title: `The file ${fileName} already exist`,
+          title: `The route file ${fileName} already exist`,
           enabled: () => existsSync(fullPath),
           task: (ctx) =>
             input("Do you want to overwrite it? (Y/n)", {
@@ -53,12 +89,12 @@ export class ProviderCommandHelper {
             }),
         },
         {
-          title: `Generate provider`,
+          title: `Generate route`,
           task: () => {
             // generate boilplate
-            const renderedTemplate = Handlebars.compile(settings.template)({
-              name: settings.providerName,
-              collection: pluralize(decamelize(settings.providerName, "-")),
+            const renderedTemplate = RouteCommandHelper.renderTemplate({
+              templateData: settings.templateData,
+              template: settings.template,
             });
 
             // write file

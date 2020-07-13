@@ -1,0 +1,9 @@
+{{#if mongoose}}
+import { Document } from "mongoose";
+
+export default interface {{name}} extends Document {
+{{else}}
+export default interface {{name}} {
+{{/if}}
+    // properties
+}

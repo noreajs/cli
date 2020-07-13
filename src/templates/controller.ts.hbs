@@ -1,0 +1,37 @@
+import { serializeError } from "serialize-error";
+import { HttpStatus } from "@noreajs/common";
+import { Response, Request } from "express";
+{{#if model}}
+    {{#if model.separateInterface}}
+import {{interface.name}} from "{{{interface.path}}};
+import {{model.name}} from "{{{model.path}}}";
+    {{else}}
+import {{model.name}}, { {{ interface.name }} } from "{{{model.path}}}";
+    {{/if}}
+{{/if}}
+{{#if provider}}
+import {{provider.name}} from "{{{provider.path}}}";
+{{/if}}
+
+/**
+ * controller description
+ */
+class {{name}} {
+    {{#each actions as |action|}}
+    /**
+    * {{action}}
+    * @param req request
+    * @param res response
+    */
+    async {{action}}(req: Request, res: Response) {
+        try {
+            // logic here
+            return res.status(HttpStatus.Ok).send("{{action}}");
+        } catch(error) {
+            return res.status(HttpStatus.InternalServerError).json(serializeError(error));
+        }
+    }
+  {{/each}}
+}
+
+export default new {{name}}() as {{name}};

@@ -1,8 +1,8 @@
 import { mongooseModel } from "@noreajs/mongoose";
-import { Schema } from "mongoose";
+import { Schema, Document } from "mongoose";
 
-export interface I{{name}} {
-    // user properties
+export interface I{{name}} extends Document{
+    // {{name}} properties
 }
 
 export default mongooseModel<I{{name}}>({

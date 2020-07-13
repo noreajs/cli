@@ -1,12 +1,12 @@
 import { Command, flags } from "@oclif/command";
-import { InterfaceCommandHelper } from "../../helpers/InterfaceCommandHelper";
 import NoreaConfigHelper from "../../helpers/NoreaConfigHelper";
-import { resolve } from "path";
+import { MiddlewareCommandHelper } from "../../helpers/MiddlewareCommandHelper";
 import { readFileSync } from "fs";
+import { resolve } from "path";
 import { green } from "colors";
 
-export default class MakeInterface extends Command {
-  static description = "create a new interface";
+export default class MakeMiddleware extends Command {
+  static description = "create a middleware";
 
   static flags = {
     help: flags.help({ char: "h" }),
@@ -14,14 +14,14 @@ export default class MakeInterface extends Command {
 
   static args = [
     {
-      name: "interfaceName",
+      name: "middlewareName",
       required: true,
-      description: "interface name",
+      description: "middleware name",
     },
   ];
 
   async run() {
-    const { args, flags } = this.parse(MakeInterface);
+    const { args, flags } = this.parse(MakeMiddleware);
 
     const configHelper = new NoreaConfigHelper();
 
@@ -32,21 +32,19 @@ export default class MakeInterface extends Command {
       const ext = configHelper.config.template === "typescript" ? "ts" : "js";
 
       // run
-      await InterfaceCommandHelper.create(this, {
-        interfaceName: args.interfaceName,
+      MiddlewareCommandHelper.create(this, {
+        middlewareName: args.middlewareName,
         config: configHelper.config,
-        modelInterface: false,
         template: readFileSync(
-          resolve(__dirname, `../../templates/interface.${ext}.hbs`)
+          resolve(__dirname, `../../templates/middleware.${ext}.hbs`)
         ).toString(),
       })
         .run()
-        .then((result) => {
-          // this.log(result);
-          this.log(green(`\n The interface has been successfully created!\n`));
+        .then(() => {
+          this.log(green(`\n The middleware has been successfully created!\n`));
         })
         .catch((err) => {
-          this.log(`\n Failed to create the interface\n`);
+          this.log(`\n Failed to create the middleware.\n`);
         });
     }
   }

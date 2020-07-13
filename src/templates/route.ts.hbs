@@ -1,0 +1,39 @@
+import { NoreaRouter } from "@noreajs/core";
+{{#if middleware}}
+import {{middleware.name}} from "{{middleware.path}}";
+{{/if}}
+{{#if controller}}
+import {{controller.name}} from "{{controller.path}}";
+{{/if}}
+
+export default (router: NoreaRouter) => {
+{{#if actions}}
+    /**
+    * Hello world routes
+    */
+    router.group("/{{group}}", {
+        routes: (module) => {
+    {{#each actions as |action|}}
+            /**
+            * {{action.description}}
+            */
+            module
+                .route("{{action.route}}")
+                .{{action.httpMethod}}({{action.controller}}.{{action.method}});
+    {{/each}}
+        },
+    });
+{{else}}
+    /**
+    * Route description
+    */
+    router
+        .route("/your-route")
+        .get((request: Request, response: Response) => {
+            // response
+            response.send({
+                message: "I know that you are going to delete me :( Mean!!"
+            });
+        });
+{{/if}}
+}

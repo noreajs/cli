@@ -1,45 +1,45 @@
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import Command from "@oclif/command";
 import Listr = require("listr");
+import decamelize = require("decamelize");
+import pluralize = require("pluralize");
 import camelcase = require("camelcase");
 import Handlebars = require("handlebars");
 import { INoreaConfig } from "../interfaces/INoreaConfig";
 
-const UpdaterRenderer = require("listr-update-renderer");
 const input = require("listr-input");
+const UpdaterRenderer = require("listr-update-renderer");
 
-export class InterfaceCommandHelper {
-  static INTERFACE_NAME_PREFIX = "I";
-
+export class MiddlewareCommandHelper {
   static create(
     cmd: Command,
     settings: {
-      interfaceName: string;
-      template: any;
+      middlewareName: string;
+      template: string;
       config: INoreaConfig;
-      modelInterface: boolean;
     }
   ) {
-    // interface name
-    const interfaceName = `${
-      InterfaceCommandHelper.INTERFACE_NAME_PREFIX
-    }${camelcase(settings.interfaceName, {
+    // middleware name
+    const middlewareName = camelcase(settings.middlewareName, {
       pascalCase: true,
-    })}`;
+    });
 
     // file name
-    const fileName = `${interfaceName}.${
+    const fileName = `${decamelize(
+      middlewareName,
+      "-"
+    ).toLowerCase()}.middleware.${
       settings.config.template === "typescript" ? "ts" : "js"
     }`;
 
     // file directory
-    const directory = `${settings.config.rootDir}/${settings.config.folders.interfaces}`;
+    const directory = `${settings.config.rootDir}/${settings.config.folders.middlewares}`;
     const fullPath = `${directory}/${fileName}`;
 
     return new Listr(
       [
         {
-          title: `Create interfaces directory: ${directory}`,
+          title: `Create middlewares directory: ${directory}`,
           enabled: () => !existsSync(directory),
           task: () => {
             mkdirSync(directory, { recursive: true });
@@ -56,18 +56,12 @@ export class InterfaceCommandHelper {
             }),
         },
         {
-          title: `Generate interface`,
+          title: `Generate middleware`,
           skip: (ctx) => ctx.skipGeneration,
           task: () => {
             // generate boilplate
             const renderedTemplate = Handlebars.compile(settings.template)({
-              name: interfaceName,
-              mongoose:
-                settings.modelInterface &&
-                settings.config.dbStrategy === "mongoose",
-              sequelize:
-                settings.modelInterface &&
-                settings.config.dbStrategy === "sequelize",
+              name: settings.middlewareName
             });
 
             // write file

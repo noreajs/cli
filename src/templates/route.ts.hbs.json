@@ -1,0 +1,19 @@
+{
+  "middleware": {
+    "name": "Aragorn",
+    "path": ""
+  },
+  "controller": {
+    "name": "Aragorn",
+    "path": ""
+  },
+  "actions": [
+    {
+      "action": {
+        "description": "",
+        "route": "",
+        "method": ""
+      }
+    }
+  ]
+}
