@@ -70,7 +70,7 @@ export default class Start extends Command {
     const { args, flags } = this.parse(Start);
 
     if (flags.env && !existsSync(`.env.${flags.env}`)) {
-      writeFileSync(`.env.${flags.env}`, null);
+      writeFileSync(`.env.${flags.env}`, '');
     }
 
     // starting the app
