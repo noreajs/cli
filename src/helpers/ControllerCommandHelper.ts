@@ -153,8 +153,8 @@ export class ControllerCommandHelper {
      * Route template data
      */
     const routeTemplateData: RouteTemplateType = {
-      group: pluralize(decamelize(settings.name, "-")),
       controller: {
+        routePrefix: pluralize(decamelize(settings.name, "-")),
         name: `${camelcase(settings.name)}Controller`,
         path: join(
           relative(

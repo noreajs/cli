@@ -14,7 +14,7 @@ export default (router: NoreaRouter) => {
     /**
     * Hello world routes
     */
-    router.group("/{{group}}", {
+    router.group("/{{controller.routePrefix}}", {
         routes: (module) => {
     {{#each actions as |action|}}
             /**

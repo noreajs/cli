@@ -11,12 +11,12 @@ const input = require("listr-input");
 const UpdaterRenderer = require("listr-update-renderer");
 
 export type RouteTemplateType = {
-  group: string;
   middleware?: {
     name: string;
     path: string;
   };
   controller?: {
+    routePrefix: string;
     name: string;
     path: string;
   };
