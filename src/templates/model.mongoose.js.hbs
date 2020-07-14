@@ -1,0 +1,14 @@
+import { mongooseModel } from "@noreajs/mongoose";
+import { Schema } from "mongoose";
+
+export default mongooseModel({
+  name: "{{name}}",
+  collection: "{{collection}}",
+  schema: new Schema(
+    {
+    },
+    {
+      timestamps: true,
+    }
+  ),
+});

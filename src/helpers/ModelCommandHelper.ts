@@ -19,7 +19,7 @@ export class ModelCommandHelper {
       modelName: string;
       template: string;
       config: INoreaConfig;
-      interfaceTemplate: string;
+      interfaceTemplate?: string;
       separateInterface: boolean;
     }
   ) {

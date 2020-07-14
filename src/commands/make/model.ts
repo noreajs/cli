@@ -34,9 +34,6 @@ export default class MakeModel extends Command {
     if (!configHelper.initialized) {
       this.log("There is not norea.js project in this folder.");
     } else {
-      // file extension
-      const ext = configHelper.config.template === "typescript" ? "ts" : "js";
-
       // run
       ModelCommandHelper.create(this, {
         modelName: args.modelName,
@@ -46,17 +43,22 @@ export default class MakeModel extends Command {
           .readFileSync(
             path.resolve(
               __dirname,
-              `../../templates/model${flags.separate ? "" : "-interface"}.${
-                configHelper.config.dbStrategy
-              }.${ext}.hbs`
+              configHelper.config.template === "typescript"
+                ? `../../templates/model${flags.separate ? "" : "-interface"}.${
+                    configHelper.config.dbStrategy
+                  }.ts.hbs`
+                : `../../templates/model.${configHelper.config.dbStrategy}.js.hbs`
             )
           )
           .toString(),
-        interfaceTemplate: fs
-          .readFileSync(
-            path.resolve(__dirname, `../../templates/interface.${ext}.hbs`)
-          )
-          .toString(),
+        interfaceTemplate:
+          configHelper.config.template === "typescript"
+            ? fs
+                .readFileSync(
+                  path.resolve(__dirname, `../../templates/interface.ts.hbs`)
+                )
+                .toString()
+            : undefined,
       })
         .run()
         .then(() => {

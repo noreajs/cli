@@ -1,0 +1,41 @@
+{{#unless actions}}
+import { Response, Request } from "express";
+{{/unless}}
+{{#if middleware}}
+import {{middleware.name}} from "{{middleware.path}}";
+{{/if}}
+{{#if controller}}
+import {{controller.name}} from "{{controller.path}}";
+{{/if}}
+
+export default (router) => {
+{{#if actions}}
+    /**
+    * Hello world routes
+    */
+    router.group("/{{controller.routePrefix}}", {
+        routes: (module) => {
+    {{#each actions as |action|}}
+            /**
+            * {{action.description}}
+            */
+            module
+                .route("{{action.route}}")
+                .{{action.httpMethod}}({{action.controller}}.{{action.method}});
+    {{/each}}
+        },
+    });
+{{else}}
+    /**
+    * Route description
+    */
+    router
+        .route("/your-route")
+        .get((request: Request, response: Response) => {
+            // response
+            response.send({
+                message: "I know that you are going to delete me :( Mean!!"
+            });
+        });
+{{/if}}
+}
