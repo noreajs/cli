@@ -123,7 +123,7 @@ export class ControllerCommandHelper {
                 pascalCase: true,
               })}`
             ).replace(/(\\)+/g, "/"),
-            separateInterface: false,
+            separateInterface: settings.model.separateInterface,
           }
         : undefined,
 
