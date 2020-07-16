@@ -21,7 +21,7 @@ export default (router) => {
             */
             module
                 .route("{{action.route}}")
-                .{{action.httpMethod}}({{action.controller}}.{{action.method}});
+                .{{action.httpMethod}}([{{action.controller}}.{{action.method}}]);
     {{/each}}
         },
     });

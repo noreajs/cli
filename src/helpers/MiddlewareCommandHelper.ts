@@ -61,7 +61,7 @@ export class MiddlewareCommandHelper {
           task: () => {
             // generate boilplate
             const renderedTemplate = Handlebars.compile(settings.template)({
-              name: settings.middlewareName
+              name: middlewareName
             });
 
             // write file

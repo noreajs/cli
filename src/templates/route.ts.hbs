@@ -22,7 +22,7 @@ export default (router: NoreaRouter) => {
             */
             module
                 .route("{{action.route}}")
-                .{{action.httpMethod}}({{action.controller}}.{{action.method}});
+                .{{action.httpMethod}}([{{action.controller}}.{{action.method}}]);
     {{/each}}
         },
     });
