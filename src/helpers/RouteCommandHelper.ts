@@ -61,7 +61,7 @@ export class RouteCommandHelper {
     });
 
     // file name
-    const fileName = `${decamelize(routeName, "-").toLowerCase()}.route.${
+    const fileName = `${decamelize(routeName, "-").toLowerCase()}.routes.${
       settings.config.template === "typescript" ? "ts" : "js"
     }`;
 
