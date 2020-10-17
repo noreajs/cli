@@ -6,4 +6,11 @@ export default interface {{name}} extends Document {
 export default interface {{name}} {
 {{/if}}
     // properties
+    {{#if timestamps}}
+    createdAt: Date;
+    updatedAt: Date;
+    {{/if}}
+    {{#if softDelete}}
+    deletedAt?: Date;
+    {{/if}}
 }

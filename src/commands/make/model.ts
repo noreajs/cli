@@ -16,6 +16,12 @@ export default class MakeModel extends Command {
       description: "separate the model's interface",
       default: false,
     }),
+
+    // add timestamps attributes in interface
+    timestamps: flags.boolean({ char: "t", default: false }),
+
+    // add deletedAt attribute in interface
+    softDelete: flags.boolean({ char: "S", default: false }),
   };
 
   static args = [
@@ -39,6 +45,8 @@ export default class MakeModel extends Command {
         modelName: args.modelName,
         config: configHelper.config,
         separateInterface: flags.separate,
+        softDelete: flags.softDelete,
+        timestamps: flags.timestamps,
         template: fs
           .readFileSync(
             path.resolve(

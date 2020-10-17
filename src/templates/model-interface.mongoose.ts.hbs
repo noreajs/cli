@@ -3,6 +3,13 @@ import { Schema, Document } from "mongoose";
 
 export interface I{{name}} extends Document{
     // {{name}} properties
+    {{#if timestamps}}
+    createdAt: Date;
+    updatedAt: Date;
+    {{/if}}
+    {{#if softDelete}}
+    deletedAt?: Date;
+    {{/if}}
 }
 
 export default mongooseModel<I{{name}}>({

@@ -108,7 +108,7 @@ export default class New extends Command {
                         );
                       }
                     }),
-                },
+                }
               ],
               { concurrent: true }
             );

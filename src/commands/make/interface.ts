@@ -10,6 +10,12 @@ export default class MakeInterface extends Command {
 
   static flags = {
     help: flags.help({ char: "h" }),
+
+    // add timestamps attributes in interface
+    timestamps: flags.boolean({ char: "t", default: false }),
+
+    // add deletedAt attribute in interface
+    softDelete: flags.boolean({ char: "s", default: false }),
   };
 
   static args = [
@@ -37,6 +43,8 @@ export default class MakeInterface extends Command {
           interfaceName: args.interfaceName,
           config: configHelper.config,
           modelInterface: false,
+          timestamps: flags.timestamps,
+          softDelete: flags.softDelete,
           template: readFileSync(
             resolve(__dirname, `../../templates/interface.ts.hbs`)
           ).toString(),

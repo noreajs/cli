@@ -21,6 +21,8 @@ export class ModelCommandHelper {
       config: INoreaConfig;
       interfaceTemplate?: string;
       separateInterface: boolean;
+      timestamps: boolean;
+      softDelete: boolean;
     }
   ) {
     // model name
@@ -53,6 +55,8 @@ export class ModelCommandHelper {
               interfaceName: `${settings.modelName}`,
               template: settings.interfaceTemplate,
               modelInterface: true,
+              timestamps: settings.timestamps,
+              softDelete: settings.softDelete,
             }),
         },
         {
@@ -82,6 +86,8 @@ export class ModelCommandHelper {
                     `I${modelName}`
                   ).replace(/(\\)+/g, "/")
                 : undefined,
+              timestamps: settings.timestamps,
+              softDelete: settings.softDelete,
             });
 
             // write file

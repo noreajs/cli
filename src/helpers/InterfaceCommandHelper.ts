@@ -18,6 +18,8 @@ export class InterfaceCommandHelper {
       template: any;
       config: INoreaConfig;
       modelInterface: boolean;
+      timestamps: boolean;
+      softDelete: boolean;
     }
   ) {
     // interface name
@@ -68,6 +70,8 @@ export class InterfaceCommandHelper {
               sequelize:
                 settings.modelInterface &&
                 settings.config.dbStrategy === "sequelize",
+                timestamps: settings.timestamps,
+                softDelete: settings.softDelete
             });
 
             // write file
