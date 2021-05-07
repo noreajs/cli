@@ -40,6 +40,12 @@ export default class New extends Command {
         "mongoose for MongoDB database and sequelize ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server database",
     }),
 
+    // release version
+    version: flags.string({
+      char: "v",
+      description: "Release version (ex: v1.0.1)",
+    }),
+
     // flag with no value (-f, --force)
     force: flags.boolean({ char: "f" }),
   };
@@ -96,6 +102,8 @@ export default class New extends Command {
               [
                 {
                   title: `Cloning ${flags.template} starter project`,
+                  enabled: () =>
+                    !!flags.version && `${flags.version}`.length !== 0,
                   task: (ctx, task) =>
                     execa("git", [
                       "clone",
@@ -108,7 +116,39 @@ export default class New extends Command {
                         );
                       }
                     }),
-                }
+                },
+                {
+                  title: `Cloning ${flags.template} starter project`,
+                  enabled: () =>
+                    !flags.version || `${flags.version}`.length === 0,
+                  task: (ctx, task) =>
+                    execa("git", [
+                      "clone",
+                      "--branch",
+                      flags.version,
+                      `https://github.com/noreajs/api-starter-${flags.template}.git`,
+                      args.appName,
+                    ]).then((result) => {
+                      if (result.exitCode !== 0) {
+                        throw new Error(
+                          result.stderr ?? "Unable to clone the project"
+                        );
+                      }
+                    }),
+                },
+                {
+                  title: `Removing default remote origin`,
+                  task: (ctx, task) =>
+                    execa("git", ["remote", "remove", "origin"]).then(
+                      (result) => {
+                        if (result.exitCode !== 0) {
+                          throw new Error(
+                            result.stderr ?? "Unable to remove remote origin"
+                          );
+                        }
+                      }
+                    ),
+                },
               ],
               { concurrent: true }
             );

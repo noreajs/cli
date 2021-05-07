@@ -18,10 +18,19 @@ export default class MakeModel extends Command {
     }),
 
     // add timestamps attributes in interface
-    timestamps: flags.boolean({ char: "t", default: false }),
+    timestamps: flags.boolean({
+      char: "t",
+      default: false,
+      description:
+        "add createdAt and updatedAt attributes in the model's interface",
+    }),
 
     // add deletedAt attribute in interface
-    softDelete: flags.boolean({ char: "S", default: false }),
+    softDelete: flags.boolean({
+      char: "S",
+      default: false,
+      description: "add deletedAt attribute in the model's interface",
+    }),
   };
 
   static args = [

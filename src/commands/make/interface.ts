@@ -12,10 +12,19 @@ export default class MakeInterface extends Command {
     help: flags.help({ char: "h" }),
 
     // add timestamps attributes in interface
-    timestamps: flags.boolean({ char: "t", default: false }),
+    timestamps: flags.boolean({
+      char: "t",
+      default: false,
+      description:
+        "add createdAt and updatedAt attributes in the model's interface",
+    }),
 
     // add deletedAt attribute in interface
-    softDelete: flags.boolean({ char: "s", default: false }),
+    softDelete: flags.boolean({
+      char: "s",
+      default: false,
+      description: "add deletedAt attribute in the model's interface",
+    }),
   };
 
   static args = [
