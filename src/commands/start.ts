@@ -1,7 +1,7 @@
 import { Command, flags } from "@oclif/command";
+import { cyan } from "colors";
+import { existsSync, writeFileSync } from "fs";
 import execa = require("execa");
-import { green, red, yellow, cyan } from "colors";
-import { exists, existsSync, writeFileSync } from "fs";
 
 export default class Start extends Command {
   static description = "start application";
@@ -70,7 +70,18 @@ export default class Start extends Command {
     const { args, flags } = this.parse(Start);
 
     if (flags.env && !existsSync(`.env.${flags.env}`)) {
-      writeFileSync(`.env.${flags.env}`, '');
+      writeFileSync(
+        `.env.${flags.env}`,
+        `APP_NAME=MyApp\n
+        PORT=8080\n
+        MONGODB_URI=mongodb://127.0.0.1:27017/your-api-database?replicaSet=rs0\n
+        \n
+        CORS_ALLOWED_URLS=\n
+        \n
+        OAUTH_PROVIDER=noreajs_auth=\n
+        OAUTH_PERSONAL_ACCESS_CLIENT_ID=\n
+        OAUTH_PERSONAL_ACCESS_CLIENT_SECRET=\n`
+      );
     }
 
     // starting the app
