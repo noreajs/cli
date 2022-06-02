@@ -18,8 +18,8 @@ export class InterfaceCommandHelper {
       template: any;
       config: INoreaConfig;
       modelInterface: boolean;
-      timestamps: boolean;
-      softDelete: boolean;
+      timestamps?: boolean;
+      softDelete?: boolean;
     }
   ) {
     // interface name

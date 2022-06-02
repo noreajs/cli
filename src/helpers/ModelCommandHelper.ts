@@ -21,8 +21,8 @@ export class ModelCommandHelper {
       config: INoreaConfig;
       interfaceTemplate?: string;
       separateInterface: boolean;
-      timestamps: boolean;
-      softDelete: boolean;
+      timestamps?: boolean;
+      softDelete?: boolean;
     }
   ) {
     // model name

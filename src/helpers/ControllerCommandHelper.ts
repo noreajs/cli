@@ -250,6 +250,7 @@ export class ControllerCommandHelper {
                   interfaceTemplate: settings.model.interfaceTemplate,
                   template: settings.model.template,
                   separateInterface: settings.model.separateInterface,
+                  
                 })
               : undefined,
         },

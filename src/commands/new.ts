@@ -6,6 +6,7 @@ import figlet = require("figlet");
 import stringify = require("json-stringify-pretty-compact");
 import colors = require("colors");
 import NoreaConfigHelper from "../helpers/NoreaConfigHelper";
+import { isFilled } from "@noreajs/common";
 
 export default class New extends Command {
   static description = "create a new norea.js application (API)";
@@ -101,13 +102,12 @@ export default class New extends Command {
             return new Listr(
               [
                 {
-                  title: `Cloning ${flags.template} starter project`,
+                  title: `Cloning ${flags.template} starter project - version:${flags.version}`,
                   enabled: () =>
-                    !!flags.version && `${flags.version}`.length !== 0,
+                    isFilled(flags.version) && `${flags.version}`.length !== 0,
                   task: (ctx, task) =>
-                    execa("git", [
-                      "clone",
-                      `https://github.com/noreajs/api-starter-${flags.template}.git`,
+                    execa("degit", [
+                      `noreajs/api-starter-${flags.template}#${flags.version}`,
                       args.appName,
                     ]).then((result) => {
                       if (result.exitCode !== 0) {
@@ -120,13 +120,10 @@ export default class New extends Command {
                 {
                   title: `Cloning ${flags.template} starter project`,
                   enabled: () =>
-                    !flags.version || `${flags.version}`.length === 0,
+                    !isFilled(flags.version) || `${flags.version}`.length === 0,
                   task: (ctx, task) =>
-                    execa("git", [
-                      "clone",
-                      "--branch",
-                      flags.version,
-                      `https://github.com/noreajs/api-starter-${flags.template}.git`,
+                    execa("degit", [
+                      `noreajs/api-starter-${flags.template}`,
                       args.appName,
                     ]).then((result) => {
                       if (result.exitCode !== 0) {
@@ -135,19 +132,6 @@ export default class New extends Command {
                         );
                       }
                     }),
-                },
-                {
-                  title: `Removing default remote origin`,
-                  task: (ctx, task) =>
-                    execa("git", ["remote", "remove", "origin"]).then(
-                      (result) => {
-                        if (result.exitCode !== 0) {
-                          throw new Error(
-                            result.stderr ?? "Unable to remove remote origin"
-                          );
-                        }
-                      }
-                    ),
                 },
               ],
               { concurrent: true }
@@ -171,6 +155,17 @@ export default class New extends Command {
           enabled: (ctx) => flags.package === "npm" || ctx.yarn === false,
           task: () => execa("npm", ["install"], { cwd: args.appName }),
         },
+        // {
+        //   title: `Removing default remote origin`,
+        //   task: (ctx, task) =>
+        //     execa("git", ["remote", "remove", "origin"]).then((result) => {
+        //       if (result.exitCode !== 0) {
+        //         throw new Error(
+        //           result.stderr ?? "Unable to remove remote origin"
+        //         );
+        //       }
+        //     }),
+        // },
         {
           title: "Creating config file",
           task: () =>
