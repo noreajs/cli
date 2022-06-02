@@ -22,7 +22,7 @@ $ npm install -g @noreajs/cli
 $ norea COMMAND
 running command...
 $ norea (-v|--version|version)
-@noreajs/cli/0.0.4 win32-x64 node-v12.16.2
+@noreajs/cli/0.1.0 win32-x64 node-v16.9.1
 $ norea --help [COMMAND]
 USAGE
   $ norea COMMAND
@@ -99,7 +99,7 @@ EXAMPLE
   $ norea hello
 ```
 
-_See code: [src\commands\hello.ts](https://github.com/noreajs/cli/blob/v0.0.4/src\commands\hello.ts)_
+_See code: [src\commands\hello.ts](https://github.com/noreajs/cli/blob/v0.1.0/src\commands\hello.ts)_
 
 ## `norea help [COMMAND]`
 
@@ -141,7 +141,7 @@ OPTIONS
   --providerName=providerName      include a provider with the given name, generate if not exist.
 ```
 
-_See code: [src\commands\make\controller.ts](https://github.com/noreajs/cli/blob/v0.0.4/src\commands\make\controller.ts)_
+_See code: [src\commands\make\controller.ts](https://github.com/noreajs/cli/blob/v0.1.0/src\commands\make\controller.ts)_
 
 ## `norea make:interface INTERFACENAME`
 
@@ -155,10 +155,12 @@ ARGUMENTS
   INTERFACENAME  interface name
 
 OPTIONS
-  -h, --help  show CLI help
+  -h, --help        show CLI help
+  -s, --softDelete  add deletedAt attribute in the model's interface
+  -t, --timestamps  add createdAt and updatedAt attributes in the model's interface
 ```
 
-_See code: [src\commands\make\interface.ts](https://github.com/noreajs/cli/blob/v0.0.4/src\commands\make\interface.ts)_
+_See code: [src\commands\make\interface.ts](https://github.com/noreajs/cli/blob/v0.1.0/src\commands\make\interface.ts)_
 
 ## `norea make:middleware MIDDLEWARENAME`
 
@@ -175,7 +177,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src\commands\make\middleware.ts](https://github.com/noreajs/cli/blob/v0.0.4/src\commands\make\middleware.ts)_
+_See code: [src\commands\make\middleware.ts](https://github.com/noreajs/cli/blob/v0.1.0/src\commands\make\middleware.ts)_
 
 ## `norea make:model MODELNAME`
 
@@ -189,11 +191,13 @@ ARGUMENTS
   MODELNAME  model name
 
 OPTIONS
-  -h, --help      show CLI help
-  -s, --separate  separate the model's interface
+  -S, --softDelete  add deletedAt attribute in the model's interface
+  -h, --help        show CLI help
+  -s, --separate    separate the model's interface
+  -t, --timestamps  add createdAt and updatedAt attributes in the model's interface
 ```
 
-_See code: [src\commands\make\model.ts](https://github.com/noreajs/cli/blob/v0.0.4/src\commands\make\model.ts)_
+_See code: [src\commands\make\model.ts](https://github.com/noreajs/cli/blob/v0.1.0/src\commands\make\model.ts)_
 
 ## `norea make:provider PROVIDERNAME`
 
@@ -210,7 +214,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src\commands\make\provider.ts](https://github.com/noreajs/cli/blob/v0.0.4/src\commands\make\provider.ts)_
+_See code: [src\commands\make\provider.ts](https://github.com/noreajs/cli/blob/v0.1.0/src\commands\make\provider.ts)_
 
 ## `norea make:route ROUTENAME`
 
@@ -227,7 +231,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src\commands\make\route.ts](https://github.com/noreajs/cli/blob/v0.0.4/src\commands\make\route.ts)_
+_See code: [src\commands\make\route.ts](https://github.com/noreajs/cli/blob/v0.1.0/src\commands\make\route.ts)_
 
 ## `norea new APPNAME`
 
@@ -251,9 +255,11 @@ OPTIONS
   -p, --package=npm|yarn                [default: npm] package manager to use
 
   -t, --template=typescript|javascript  [default: typescript] project template
+
+  -v, --version=version                 Release version (ex: v1.0.1)
 ```
 
-_See code: [src\commands\new.ts](https://github.com/noreajs/cli/blob/v0.0.4/src\commands\new.ts)_
+_See code: [src\commands\new.ts](https://github.com/noreajs/cli/blob/v0.1.0/src\commands\new.ts)_
 
 ## `norea plugins`
 
@@ -389,7 +395,7 @@ OPTIONS
   --port=port                             application port
 ```
 
-_See code: [src\commands\start.ts](https://github.com/noreajs/cli/blob/v0.0.4/src\commands\start.ts)_
+_See code: [src\commands\start.ts](https://github.com/noreajs/cli/blob/v0.1.0/src\commands\start.ts)_
 
 ## `norea update [CHANNEL]`
 

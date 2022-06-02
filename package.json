@@ -1,7 +1,7 @@
 {
   "name": "@noreajs/cli",
   "description": "Norea.js command lines for components and applications creation",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "author": "Arnold LAMBOU @lambou",
   "bin": {
     "norea": "./bin/run"
